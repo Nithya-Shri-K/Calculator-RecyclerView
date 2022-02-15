@@ -10,11 +10,20 @@ import androidx.recyclerview.widget.RecyclerView
 
 class Adapter(var data : Array<String>, var actionListener: FragmentActionListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-     class ButtonsViewHolder(view : View) : RecyclerView.ViewHolder(view){
-         val button: Button = view.findViewById<Button>(R.id.operation_button)
+     inner class ButtonsViewHolder(view : View) : RecyclerView.ViewHolder(view){
+         private val button= view.findViewById<Button>(R.id.operation_button)
+         fun bind(bindingData : String){
+             button.text = bindingData
+             button.setOnClickListener {
+                 actionListener.selectedOperation(Operation.valueOf(button.text.toString()))
+             }
+         }
      }
-    class ResultViewHolder(view : View) : RecyclerView.ViewHolder(view){
-        val resultText: TextView = view.findViewById<TextView>(R.id.result)
+    inner class ResultViewHolder(view : View) : RecyclerView.ViewHolder(view){
+        private val resultText= view.findViewById<TextView>(R.id.result)
+        fun bind(bindingData: String){
+            resultText.text = bindingData
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -29,27 +38,20 @@ class Adapter(var data : Array<String>, var actionListener: FragmentActionListen
             ResultViewHolder(view)
         }
     }
-
-    override fun getItemCount(): Int {
-        return data.size
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(getItemViewType(position) == OPERATION_SCREEN){
             val viewHolder = holder as ButtonsViewHolder
-            viewHolder.button.text = data[position]
-            viewHolder.button.setOnClickListener {
-                actionListener.selectedOperation(Operation.valueOf(viewHolder.button.text.toString()))
-            }
+            viewHolder.bind(data[position])
         }
         else{
             val viewHolder = holder as ResultViewHolder
-            viewHolder.resultText.text = data[position]
+            viewHolder.bind(data[position])
         }
-
     }
-
     override fun getItemViewType(position: Int): Int {
         return if(data.size == 1) RESULT_SCREEN else OPERATION_SCREEN
+    }
+    override fun getItemCount(): Int {
+        return data.size
     }
 }
