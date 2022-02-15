@@ -22,7 +22,7 @@ class MainScreen : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainScreenBinding.inflate(inflater, container, false)
-        val buttonData = arrayOf("ADD", "SUBTRACT", "MULTIPLY", "DIVIDE")
+        val buttonData = arrayOf(getString(R.string.add), getString(R.string.subtract), getString(R.string.multiply), getString(R.string.divide))
         if(savedInstanceState ==null) {
             adapterData = Adapter(buttonData, actionListener)
         }
