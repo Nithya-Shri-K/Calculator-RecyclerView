@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(),FragmentActionListener{
     }
     override fun selectedOperation(operationSelected: Operation) {
         operation = operationSelected
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT && operationSelected != Operation.DEFAULT
+        if((resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT && operationSelected != Operation.DEFAULT)
             || resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             binding.fragmentContainerTwo.visibility = View.VISIBLE
             addCalculateFragment(operation, R.id.fragment_container_two, 1)

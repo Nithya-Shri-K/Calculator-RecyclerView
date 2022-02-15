@@ -38,6 +38,7 @@ class MainScreen : Fragment() {
         binding.buttonsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = adapterData
+            setHasFixedSize(true)
         }
         binding.toolbarTitle.text = getString(R.string.toolbar_header)
 
@@ -72,6 +73,7 @@ class MainScreen : Fragment() {
     private fun modifyScreenForResult(){
         adapterData.data = arrayOf(result)
         adapterData.notifyDataSetChanged()
+        binding.buttonsRecyclerView.setHasFixedSize(true)
         binding.reset.visibility = View.VISIBLE
         actionListener.currentScreen(HOME_SCREEN)
         actionListener.selectedOperation(Operation.DEFAULT)
